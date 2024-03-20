@@ -1,0 +1,19 @@
+{
+	"name": "Node-Server for Pixel-Mover",
+	"version": "0.1",
+	"description": "The most simple implementation of a server for pixel-mover",
+	"author": "Alexander Bösecke",
+	"licence": "GPL",
+
+	"scripts": {
+		"dev": "node --inspect app/server.mjs",
+		"start": "node app/server.mjs",
+		"test": "echo \"Error: no test specified\""
+	},
+
+	"dependencies": {
+	},
+
+	"devDependencies": {
+	}
+}
