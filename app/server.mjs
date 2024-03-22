@@ -1,5 +1,4 @@
 import http from 'http';
-const hostname = 'localhost';
 const port = 3001;
 
 const server = http.createServer((req, res) => {
@@ -11,5 +10,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, () => {
-	console.log(`Server running at http://${hostname}:${port}/`);
+	console.log(`Server running at ${port}`);
 });
