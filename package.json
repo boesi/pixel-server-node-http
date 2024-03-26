@@ -7,7 +7,7 @@
 
 	"scripts": {
 		"dev": "node --inspect app/server.mjs",
-		"start": "node app/server.mjs",
+		"start": "node app/app.mjs",
 		"test": "echo \"Error: no test specified\""
 	},
 
