@@ -1,14 +1,15 @@
-function failed(path, res) {
+function failed(request, response) {
+	console.error(`No path found for ${request.url}`);
 	res.writeHead(404);
-	res.end(`Have no handler for ${path}`);
+	res.end(`Have no handler for ${request.url}`);
 }
 
-function route(path, res, handler, payload) {
-	console.info(`Routing request for ${path}`);
+function route(request, response, handler, payload) {
+	console.info(`Routing request for ${request.url}`);
 
-	let routeFound = typeof handler[path] == 'function' && handler.hasOwnProperty(path);
+	let routeFound = typeof handler[request.url] == 'function' && handler.hasOwnProperty(request.url);
 
-	return routeFound ? handler[path](res, payload) : failed(path, res);
+	return routeFound ? handler[request.url](response, payload) : failed(request, response);
 }
 
 export default route;

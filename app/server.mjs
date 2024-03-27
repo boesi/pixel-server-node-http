@@ -7,7 +7,7 @@ function start(route, handler) {
 
 		req.on('data', chunk => payload += chunk);
 
-		req.on('end', () => route(req.url, res, handler, payload));
+		req.on('end', () => route(req, res, handler, payload));
 	}
 
 	http.createServer(handleReq).listen(port, () => console.info(`PM-Server running on port ${port}`));
