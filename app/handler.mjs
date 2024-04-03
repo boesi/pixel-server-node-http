@@ -1,6 +1,6 @@
 const handler = {
-	'/': getNames,
-	'/item': getItem,
+	'GET /': getNames,
+	'PUT /item': getItem,
 };
 
 function getNames(res) {
