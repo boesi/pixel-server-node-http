@@ -5,9 +5,8 @@ function failed(request, response) {
 }
 
 function route(request, response, handler, payload) {
-	console.info(`Routing request for ${request.url}`);
-
 	const key = `${request.method} ${request.url}`;
+	console.info(`Routing request for key ${key}`);
 	let routeFound = typeof handler[key] == 'function' && handler.hasOwnProperty(key);
 
 	return routeFound ? handler[key](response, payload) : failed(request, response);

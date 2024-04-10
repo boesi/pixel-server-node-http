@@ -1,8 +1,13 @@
+import config from './config.mjs';
+
+const rootPath = config.serverPath + '/';
+const itemPath = config.serverPath + '/item';
+
 const handler = {
-	'GET /': getNames,
-	'GET /item': loadItem,
-	'PUT /item': saveItem,
-	'DELETE /item': deleteItem,
+	['GET ' + rootPath]: getNames,
+	['GET ' + itemPath]: loadItem,
+	['PUT ' + itemPath]: saveItem,
+	['DELETE ' + itemPath]: deleteItem,
 };
 
 function getNames(res) {
