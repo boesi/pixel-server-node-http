@@ -1,4 +1,4 @@
-import http from 'http';
+import http from 'node:http';
 const port = 3001;
 
 function start(route, handler) {
