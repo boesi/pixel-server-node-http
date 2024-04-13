@@ -5,11 +5,12 @@ function failed(request, response) {
 }
 
 function route(request, response, handler, payload) {
-	const key = `${request.method} ${request.url}`;
+	const url = new URL(request.url, `http://${request.headers.host}`);
+	const key = `${request.method} ${url.pathname}`;
 	console.info(`Routing request for key ${key}`);
 	let routeFound = typeof handler[key] == 'function' && handler.hasOwnProperty(key);
 
-	return routeFound ? handler[key](response, payload) : failed(request, response);
+	return routeFound ? handler[key](response, url.searchParams, payload) : failed(request, response);
 }
 
 export default route;
