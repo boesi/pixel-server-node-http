@@ -1,4 +1,4 @@
-import { open } from 'node:fs/promises';
+import { open, opendir } from 'node:fs/promises';
 import config from './config.mjs';
 
 const rootPath = config.serverPath + '/';
@@ -13,10 +13,19 @@ const handler = {
 	['DELETE ' + itemPath]: deleteItem,
 };
 
-function getNames(res) {
+async function getNames(res) {
 	console.info('Handler getNames');
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.write(JSON.stringify({names: []}));
+	try {
+		let names = [];
+		for await (const file of await opendir(dir)) {
+			names.push(file.name);
+		}
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.write(JSON.stringify({names}));
+	} catch (error) {
+		console.error('Handler getNames: error reading content of directory', error);
+		res.writeHead(500);
+	}
 	res.end();
 }
 
