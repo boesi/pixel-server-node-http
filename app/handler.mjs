@@ -6,6 +6,7 @@ const itemPath = config.serverPath + '/item';
 const dir = '/var/data/';
 
 const ext = '.json';
+const reExt = new RegExp(`${ext}$`);
 
 const handler = {
 	['GET ' + rootPath]: getNames,
@@ -19,7 +20,7 @@ async function getNames(res) {
 	try {
 		let names = [];
 		for await (const file of await opendir(dir)) {
-			names.push(file.name);
+			names.push(file.name.replace(reExt, ''));
 		}
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		res.write(JSON.stringify({names}));
