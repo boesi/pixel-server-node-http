@@ -5,6 +5,7 @@ const rootPath = config.serverPath + '/';
 const itemPath = config.serverPath + '/item';
 const dir = '/var/data/';
 
+const ext = '.json';
 
 const handler = {
 	['GET ' + rootPath]: getNames,
@@ -40,7 +41,7 @@ async function saveItem(res, parameter, item) {
 	console.info(`Handler saveItem with item type: ${typeof item}, parameter: ${parameter}`);
 	let fd;
 	try {
-		fd = await open(dir + parameter.get('name') + '.json', 'w');
+		fd = await open(dir + parameter.get('name') + ext, 'w');
 		fd.writeFile(item);
 	} finally {
 		await fd?.close();
