@@ -31,10 +31,17 @@ async function getNames(res) {
 	res.end();
 }
 
-function loadItem(res, name) {
-	console.info(`test2 Handler loadItem with name: ${name}`);
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.write(JSON.stringify({item: {name}}));
+async function loadItem(res, parameter) {
+	console.info(`test2 Handler loadItem with parameter: ${parameter}`);
+	let fd;
+	try {
+		fd = await open(dir + parameter.get('name') + ext, 'r');
+		let item = await fd.readFile('utf8');
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.write(item);
+	} finally {
+		await fd?.close();
+	}
 	res.end();
 }
 
