@@ -1,4 +1,4 @@
-import { open, opendir } from 'node:fs/promises';
+import { open, opendir, rm } from 'node:fs/promises';
 import config from './config.mjs';
 
 const rootPath = config.serverPath + '/';
@@ -59,9 +59,15 @@ async function saveItem(res, parameter, item) {
 	res.end();
 }
 
-function deleteItem(res, name) {
-	console.log(`Handler deleteItem with name: ${name}`);
-	res.writeHead(200);
+async function deleteItem(res, parameter) {
+	console.log(`Handler deleteItem with name: ${parameter}`);
+	let fd;
+	try {
+		await rm(dir + parameter.get('name') + ext);
+		res.writeHead(200);
+	} finally {
+		await fd?.close();
+	}
 	res.end();
 }
 
