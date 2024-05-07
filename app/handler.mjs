@@ -25,20 +25,25 @@ async function getNames(res) {
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		res.write(JSON.stringify({names}));
 	} catch (error) {
-		console.error('Handler getNames: error reading content of directory', error);
+		console.error('Handler getNames: error reading content of directory', {error});
 		res.writeHead(500);
+		res.write(error.message);
 	}
 	res.end();
 }
 
 async function loadItem(res, parameter) {
-	console.info(`test2 Handler loadItem with parameter: ${parameter}`);
+	console.info(`Handler loadItem with parameter: ${parameter}`);
 	let fd;
 	try {
 		fd = await open(dir + parameter.get('name') + ext, 'r');
 		let item = await fd.readFile('utf8');
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		res.write(item);
+	} catch(error) {
+		console.error('Handler loadItem', {parameter, error});
+		res.writeHead(400);
+		res.write(error.message);
 	} finally {
 		await fd?.close();
 	}
@@ -51,11 +56,15 @@ async function saveItem(res, parameter, item) {
 	try {
 		fd = await open(dir + parameter.get('name') + ext, 'w');
 		fd.writeFile(item);
+		res.writeHead(200, {'Content-Type': 'application/json'});
+		res.write(JSON.stringify({item: {item}}));
+	} catch(error) {
+		console.error('Handler deleteItem', {parameter, error});
+		res.writeHead(500);
+		res.write(error.message);
 	} finally {
 		await fd?.close();
 	}
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.write(JSON.stringify({item: {item}}));
 	res.end();
 }
 
@@ -65,6 +74,10 @@ async function deleteItem(res, parameter) {
 	try {
 		await rm(dir + parameter.get('name') + ext);
 		res.writeHead(200);
+	} catch(error) {
+		console.error('Handler deleteItem', {parameter, error});
+		res.writeHead(400);
+		res.write(error.message);
 	} finally {
 		await fd?.close();
 	}
