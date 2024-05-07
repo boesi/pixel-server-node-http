@@ -59,7 +59,7 @@ async function saveItem(res, parameter, item) {
 		res.writeHead(200, {'Content-Type': 'application/json'});
 		res.write(JSON.stringify({item: {item}}));
 	} catch(error) {
-		console.error('Handler deleteItem', {parameter, error});
+		console.error('Handler saveItem', {parameter, error});
 		res.writeHead(500);
 		res.write(error.message);
 	} finally {
