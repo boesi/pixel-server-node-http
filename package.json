@@ -6,7 +6,7 @@
 	"licence": "GPL",
 
 	"scripts": {
-		"dev": "node --inspect app/server.mjs",
+		"dev": "node --inspect=0.0.0.0 --watch --watch-preserve-output app/app.mjs",
 		"start": "node app/app.mjs",
 		"test": "echo \"Error: no test specified\""
 	},
