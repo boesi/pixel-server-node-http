@@ -9,7 +9,9 @@ class Files {
 	async getNames() {
 		let names = [];
 		for await (const file of await opendir(this.#dir)) {
-			names.push(file.name.replace(this.#reExt, ''));
+			if (file.name.endsWith(this.#ext)) {
+				names.push(file.name.replace(this.#reExt, ''));
+			}
 		}
 		return names;
 	}	
