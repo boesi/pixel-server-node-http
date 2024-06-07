@@ -1,4 +1,5 @@
 import http from 'node:http';
+
 const port = 3001;
 
 function start(route, handler) {
@@ -10,7 +11,9 @@ function start(route, handler) {
 		req.on('end', () => route(req, res, handler, payload));
 	}
 
-	http.createServer(handleReq).listen(port, () => console.info(`PM-Server running on port ${port}`));
+	const server = http.createServer(handleReq).listen(port, () => console.info(`PM-Server running on port ${port}`));
+
+	return server;
 }
 
 export default start;
